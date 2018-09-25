@@ -3,7 +3,7 @@ pipeline {
     registry = "docker_hub_account/repository_name"
     registryCredential = 'dockerhub'
   }
-  agent { docker 'ubuntu' }
+  agent any
   stages {
     stage('Building image') {
       steps{
