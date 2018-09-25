@@ -5,17 +5,13 @@ pipeline {
   }
   agent any
 
-  node("env_stagging") {
-    checkout scm
-
     stages {
-      stage('Building image') {
-        steps{
-          script {
-            docker.build registry + ":$BUILD_NUMBER"
-          }
-        }
-      }
+	stage('Building image') {
+	    steps{
+		script {
+		    docker.build registry + ":$BUILD_NUMBER"
+		}
+	    }
+	}
     }
-  }
 }
