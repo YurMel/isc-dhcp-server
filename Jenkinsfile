@@ -16,8 +16,7 @@ node("production") {
 	}
 	catch(e) {
 	    error "Integration Test failed"
-	}
-	finally {
+	}finally {
 	    sh "docker rm -f docker-ci-cd || true"
 	    sh "docker ps -aq | xargs docker rm || true"
 	    sh "docker images -aq -f dangling=true | xargs docker rmi || true"
@@ -30,4 +29,5 @@ node("production") {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
 	sh "docker push ${DOCKERHUB_USERNAME}/docker-ci-cd:${BUILD_NUMBER}"
     }
+
 }
