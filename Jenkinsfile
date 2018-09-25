@@ -4,11 +4,16 @@ pipeline {
     registryCredential = 'dockerhub'
   }
   agent any
-  stages {
-    stage('Building image') {
-      steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
+
+  node("env_stagging") {
+    checkout scm
+
+    stages {
+      stage('Building image') {
+        steps{
+          script {
+            docker.build registry + ":$BUILD_NUMBER"
+          }
         }
       }
     }
