@@ -1,6 +1,6 @@
 env.DOCKERHUB_USERNAME = 'YurMel'
 
-node("production") {
+node {
     checkout scm
 
     stage("Unit Test") {
@@ -27,7 +27,7 @@ node("production") {
     }
     stage("Publish") {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
-	sh "docker push ${DOCKERHUB_USERNAME}/docker-ci-cd:${BUILD_NUMBER}"
+	    sh "docker push ${DOCKERHUB_USERNAME}/docker-ci-cd:${BUILD_NUMBER}"
 	}
     }
 }
