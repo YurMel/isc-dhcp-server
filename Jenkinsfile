@@ -28,6 +28,6 @@ node("production") {
     stage("Publish") {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
 	sh "docker push ${DOCKERHUB_USERNAME}/docker-ci-cd:${BUILD_NUMBER}"
+	}
     }
-
 }
