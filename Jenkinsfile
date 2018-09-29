@@ -1,8 +1,9 @@
-  environment {
-    registry = "docker_hub_account/repository_name"
-    registryCredential = 'DockerHub'
-  }
-  agent any
+environment {
+  registry = "docker_hub_account/repository_name"
+  registryCredential = 'DockerHub'
+}
+
+node {
   stages {
     stage('Building image') {
       steps{
@@ -25,3 +26,4 @@
       }
     }
   }
+}
