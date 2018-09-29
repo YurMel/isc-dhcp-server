@@ -21,7 +21,6 @@ pipeline {
           sh 'docker push shanem/spring-petclinic:latest'
         }
       }
-    }
   }
   stage("Publish") {
     withDockerRegistry([credentialsId: 'DockerHub']) {
