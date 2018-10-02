@@ -16,7 +16,7 @@ node {
 	    error "Integration Test failed"
 	}
 	finally {
-	    sh "docker rm -f docker-ci-cd || true"
+	    sh "docker rm -f mysql || true"
 	    sh "docker ps -aq | xargs docker rm || true"
 	    sh "docker images -aq -f dangling=true | xargs docker rmi || true"
 	}
