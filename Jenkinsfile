@@ -3,8 +3,10 @@ env.DOCKERHUB_IMAGE = 'mysql'
 env.DOCKERHUB_REPO = '${DOCKERHUB_USERNAME}/${DOCKERHUB_IMAGE}'
 
 node('node1.devops.ua') {
-    checkout scm
 
+    stage('Clone repository') {
+	checkout scm
+    }
 //    stage("Unit Test") {
 //	sh "docker run --rm -v ${WORKSPACE}:/go/src/docker-ci-cd golang go test docker-ci-cd -v --run Unit"
 //    }
