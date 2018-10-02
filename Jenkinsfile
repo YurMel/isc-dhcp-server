@@ -1,4 +1,6 @@
 env.DOCKERHUB_USERNAME = 'yurmel'
+env.DOCKERHUB_IMAGE = 'mysql'
+env.DOCKERHUB_REPO = '${DOCKERHUB_USERNAME}/${DOCKERHUB_IMAGE}'
 
 node('node1.devops.ua') {
     checkout scm
@@ -23,6 +25,7 @@ node('node1.devops.ua') {
     }
     stage("Build") {
 	sh "docker build -t ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER} ."
+	docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
     }
     stage("Publish") {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
@@ -40,11 +43,6 @@ node {
       withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
         sh 'docker push shanem/spring-petclinic:latest'
-      }
-    }
-    stage("Publish") {
-      withDockerRegistry([credentialsId: 'DockerHub']) {
-        sh "docker push ${DOCKERHUB_USERNAME}/isc-dhcp-server:${BUILD_NUMBER}"
       }
     }
 */
