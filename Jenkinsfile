@@ -14,7 +14,8 @@ node {
 	}
 	catch(err) {
 	    error "Integration Test failed"
-	}finally {
+	}
+	finally {
 	    sh "docker rm -f docker-ci-cd || true"
 	    sh "docker ps -aq | xargs docker rm || true"
 	    sh "docker images -aq -f dangling=true | xargs docker rmi || true"
@@ -27,6 +28,7 @@ node {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
 	    sh "docker push ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER}"
 	}
+    }
 /*
 node {
     checkout scm
