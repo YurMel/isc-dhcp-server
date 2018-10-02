@@ -1,4 +1,4 @@
-env.DOCKERHUB_USERNAME = 'YurMel'
+env.DOCKERHUB_USERNAME = 'yurmel'
 
 node('node1.devops.ua') {
     checkout scm
