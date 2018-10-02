@@ -27,6 +27,7 @@ node {
 	withDockerRegistry([credentialsId: 'DockerHub']) {
 	    sh "docker push ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER}"
 	}
+/*
 node {
     checkout scm
 
@@ -44,4 +45,5 @@ node {
         sh "docker push ${DOCKERHUB_USERNAME}/isc-dhcp-server:${BUILD_NUMBER}"
       }
     }
+*/
 }
