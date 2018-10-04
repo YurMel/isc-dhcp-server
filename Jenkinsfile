@@ -7,10 +7,19 @@ node('node1.devops.ua') {
     stage('Clone repository') {
 	checkout scm
     }
-//    stage("Unit Test") {
+//    stage('Unit Test') {
 //	sh "docker run --rm -v ${WORKSPACE}:/go/src/docker-ci-cd golang go test docker-ci-cd -v --run Unit"
 //    }
-    stage("Integration Test") {
+    stage('Build') {
+	sh "docker build -t ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER} ."
+	docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
+    }
+    stage('Publish') {
+	withDockerRegistry([credentialsId: 'DockerHub']) {
+	    sh "docker push ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER}"
+	}
+    }
+    stage('Deploy') {
 	try {
 	    sh "docker build -t mysql ."
 	    sh "docker rm -f mysql || true"
@@ -25,15 +34,7 @@ node('node1.devops.ua') {
 	    sh "docker images -aq -f dangling=true | xargs docker rmi || true"
 	}
     }
-    stage("Build") {
-	sh "docker build -t ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER} ."
-	docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
-    }
-    stage("Publish") {
-	withDockerRegistry([credentialsId: 'DockerHub']) {
-	    sh "docker push ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER}"
-	}
-    }
+
 /*
 node {
     checkout scm
