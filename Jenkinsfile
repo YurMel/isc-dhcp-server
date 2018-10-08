@@ -7,9 +7,6 @@ node('node1.devops.ua') {
     stage('Clone repository') {
 	checkout scm
     }
-//    stage('Unit Test') {
-//	sh "docker run --rm -v ${WORKSPACE}:/go/src/docker-ci-cd golang go test docker-ci-cd -v --run Unit"
-//    }
     stage('Build') {
 	sh "docker build -t ${DOCKERHUB_USERNAME}/mysql:${BUILD_NUMBER} ."
 	docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
@@ -23,7 +20,7 @@ node('node1.devops.ua') {
 	try {
 	    sh "docker build -t mysql ."
 	    sh "docker rm -f mysql || true"
-	    sh "docker run -d  -p 3306:3306 --name=mysql mysql"
+	    sh "docker run --rm -d -p 3306:3306 --name=mysql mysql"
 	}
 	catch(err) {
 	    error "Integration Test failed"
