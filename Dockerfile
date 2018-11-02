@@ -1,1 +1,4 @@
 FROM mysql:8.0.12
+
+ENV MYSQL_VERSION 8
+
