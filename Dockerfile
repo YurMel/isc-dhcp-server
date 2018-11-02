@@ -1,4 +1,4 @@
-FROM mysql:8.0.12
+FROM debian
 
 ENV MYSQL_VERSION 8
 
